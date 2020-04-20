@@ -8,7 +8,7 @@ subsections in this README.
 
 ## [infer-gv-impl][]
 
-This repository is an (initially private) fork of [facebook/infer][]. Everything
+This repository is a (previously private) fork of [facebook/infer][]. Everything
 relating to the prototype is in the [gradual][] branch, which started from the
 [v0.16.0][] tag of the original Infer repo. [Changes][infer changes] of note
 include the following:
@@ -43,15 +43,16 @@ include the following:
     gradual program analysis framework would not actually emit a static warning,
     but would instead silently insert a runtime null check; the prototype gives
     these instead of actually editing the source program because Infer does not
-    support editing the program being analyzed, and also because the prototype
-    is only intended for use with Java programs, which are already null-safe
+    support editing of the program being analyzed, and also because the
+    prototype is only intended for use with Java programs, which are already
+    null-safe
   - `gradual_boundary`, which similarly indicates locations where gradual
     program analysis would insert a runtime check, but are not actually
-    dereferences; these are not automatically checked by the JVM, and would
+    dereferences; these are not automatically checked by the JVM, and would thus
     result in different runtime behavior if our prototype actually inserted
     checks
   - `gradual_static`, which indicates genuine gradual program analysis static
-    warnings
+    warnings as defined by our formalism
   - `gradual_dereference`, which just indicates a dereference of a pointer; this
     issue type is only used by the `gradual_dereferences` checker, and not by
     the main prototype
@@ -92,21 +93,19 @@ the following:
 
 - [nullaway-eval/config.ini][] edited to change the `infer` path to point to the
   built prototype in a locally-cloned copy of the infer-gv-impl repository.
-  Unfortunately, this path was left hardcoded as
-  `/home/sam/github/gradual-verification/infer-gv-impl/infer` and was never
-  changed to be agnostic of the researcher's username; it must therefore be
-  updated in order to run these experiments on a different machine.
+  Unfortunately, we hardcoded this path to be
+  `/home/sam/github/gradual-verification/infer-gv-impl/infer` and never changed
+  it to be agnostic of the researcher's username; it must therefore be updated
+  in order to run these experiments on a different machine.
 
 - [nullaway-eval/download.py][] added as a convenient way to download all the
   repositories to be analyzed.
 
 - [nullaway-eval/eval_repos.py][] edited to capture the output from each
   individual run of Infer on each repository after it is analyzed. As with the
-  .ini file, this also unfortunately contains a hardcoded path to the file whose
-  relative path from the root of the NullSafetyJava is
-  NullAway/infer-out/bugs.txt, which would need to be changed from
-  `/home/sam/github/gradual-verification/infer-gv-impl/infer` in order to re-run
-  these experiments.
+  .ini file, this also contains a hardcoded path to the file whose relative path
+  from the root of the NullSafetyJava is NullAway/infer-out/bugs.txt, which
+  would need to be changed in order to re-run these experiments.
 
 - [nullaway-eval/javac_args.py][] edited to allow for multiple different Infer
   checkers, rather than just Eradicate.
@@ -145,10 +144,9 @@ Then at the top level, several files serve to summarize and explain the data:
 
 - [bar.py][] creates TikZ code for a bar chart which displays, for each
   repository, the number of null-pointer checks (which Java inserts
-  automatically) that gradual analysis eliminates by determining statically that
-  certain dereferences are known to be safe, as well as a lower bound on the
-  number of null-pointer checks that gradual analysis could not eliminate even
-  in theory (assuming complete annotations everywhere).
+  automatically) that gradual analysis determine statically to be safe, as well
+  as a lower bound on the number of null-pointer checks that gradual analysis
+  could not eliminate even in theory (assuming complete annotations everywhere).
 
 - [disagreement.json][] gives a very brief explanation for each of the warnings
   given by the "explain" Python script described below.
