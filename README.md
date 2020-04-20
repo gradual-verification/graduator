@@ -121,7 +121,68 @@ the following:
 
 ## [infer-gv-data][]
 
+This repository contains a directory for each of the repositories from
+NullAway's evaluation suite; each such directory contains several .txt files
+with Infer output from various checkers:
+
+- dereferences.txt holds output from the `--gradual-dereferences` checker.
+
+- eradicate.txt holds output from Eradicate.
+
+- gradual.txt holds output from the `--gradual` checker, the prototype being
+  evaluated here.
+
+- limit.txt holds output from the `--gradual-unannotated` checker.
+
+- nullsafe.txt holds output from Infer's existing `--nullsafe` checker.
+
+- unannotated.txt holds output from an older version of the
+  `--gradual-unannotated` checker which just removes every annotation instead of
+  making them all `@NonNull`.
+
+Then at the top level, several files serve to summarize and explain the data:
+
+- [bar.py][] creates TikZ code for a bar chart which displays, for each
+  repository, the number of null-pointer checks (which Java inserts
+  automatically) that gradual analysis eliminates by determining statically that
+  certain dereferences are known to be safe, as well as a lower bound on the
+  number of null-pointer checks that gradual analysis could not eliminate even
+  in theory (assuming complete annotations everywhere).
+
+- [disagreement.json][] gives a very brief explanation for each of the warnings
+  given by the "explain" Python script described below.
+
+- [disagreement.md][] gives a somewhat longer explanation for each of the very
+  brief explanations given in the aforementioned JSON file, and also groups
+  those explanations into ones that are false positives (in the "Negative"
+  section) and ones that may be true positives (in the "Positive" section).
+
+- [explain.py][] lists all the static warnings that are not shared by all three
+  of the Infer checkers under consideration (Eradicate, `--nullsafe`, and
+  `--gradual`).
+
+- [explain.sh][] is a convenient way to run the Python script above on all the
+  repositories, and store the output in an explain.txt file for each repository.
+
+- [requirements.txt][] lists the Python 3 packages that must be installed in
+  order to run the Venn diagram script described below.
+
+- [venn.py][], as written, just creates a Venn diagram PNG called venn/all.png
+  with three circles. If the `exit()` on [line 18][] is removed, then the script
+  also creates directories venn/dynamic and venn/static, each holding a Venn
+  diagram for each repository. The venn/dynamic diagrams show the same
+  information given by the bar chart script. The venn/static diagrams show what
+  overlap there is among the various Infer checkers, where red corresponds to
+  Eradicate, blue corresponds to `--nullsafe`, and green corresponds to
+  `--gradual`. The venn/static diagrams can also be given labels and numbers by
+  replacing [lines 25-29][] with [lines 39-40][] (properly indented, of course).
+
 [.travis.yml]: https://github.com/gradual-verification/infer-gv-impl/blob/gradual/.travis.yml
+[bar.py]: https://github.com/gradual-verification/infer-gv-data/blob/master/bar.py
+[disagreement.json]: https://github.com/gradual-verification/infer-gv-data/blob/master/disagreement.json
+[disagreement.md]: https://github.com/gradual-verification/infer-gv-data/blob/master/disagreement.md
+[explain.py]: https://github.com/gradual-verification/infer-gv-data/blob/master/explain.py
+[explain.sh]: https://github.com/gradual-verification/infer-gv-data/blob/master/explain.sh
 [infer changes]: https://github.com/gradual-verification/infer-gv-impl/compare/v0.16.0...gradual
 [infer/src/base/config.ml]: https://github.com/gradual-verification/infer-gv-impl/blob/gradual/infer/src/base/Config.ml
 [infer/src/base/config.mli]: https://github.com/gradual-verification/infer-gv-impl/blob/gradual/infer/src/base/Config.mli
@@ -137,6 +198,9 @@ the following:
 [infer-gv-data]: https://github.com/gradual-verification/infer-gv-data
 [install.md]: https://github.com/gradual-verification/infer-gv-impl/blob/gradual/INSTALL.md
 [libmpfr-dev]: https://github.com/gradual-verification/infer-gv-impl/blob/gradual/.travis.yml#L12
+[line 18]: https://github.com/gradual-verification/infer-gv-data/blob/master/venn.py#L18
+[lines 25-29]: https://github.com/gradual-verification/infer-gv-data/blob/master/venn.py#L25-L29
+[lines 39-40]: https://github.com/gradual-verification/infer-gv-data/blob/master/venn.py#L39-L40
 [makefile]: https://github.com/gradual-verification/infer-gv-impl/blob/gradual/Makefile
 [nullaway]: https://doi.org/10.5281/zenodo.3267949
 [nullaway-eval/all.sh]: https://github.com/gradual-verification/NullSafetyJava/blob/master/nullaway-eval/all.sh
@@ -148,6 +212,8 @@ the following:
 [nullaway-eval/run.sh]: https://github.com/gradual-verification/NullSafetyJava/blob/master/nullaway-eval/run.sh
 [nullsafetyjava]: https://github.com/gradual-verification/NullSafetyJava
 [nullsafetyjava changes]: https://github.com/gradual-verification/NullSafetyJava/compare/ad061a9e8f25f0253e37a42be457b2fb4e24a01a...master
+[requirements.txt]: https://github.com/gradual-verification/infer-gv-data/blob/master/requirements.txt
 [run.sh]: https://github.com/gradual-verification/NullSafetyJava/blob/7156e1461a16dd0730b4f871056a331274909d8f/nullaway-eval/run.sh
 [test]: https://github.com/gradual-verification/infer-gv-impl/blob/gradual/test
 [v0.16.0]: https://github.com/facebook/infer/tree/v0.16.0
+[venn.py]: https://github.com/gradual-verification/infer-gv-data/blob/master/venn.py
