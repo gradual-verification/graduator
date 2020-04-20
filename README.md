@@ -2,8 +2,9 @@
 
 This repository documents the 2019 prototype and experiments for the gradual
 program analysis project, which were split into three different repositories
-(for the prototype, experiments, and results, respectively) corresponding to the
-following three subsections in this README.
+(for the [prototype][infer-gv-impl], [experiments][nullsafetyjava], and
+[results][infer-gv-data], respectively) corresponding to the following three
+subsections in this README.
 
 ## [infer-gv-impl][]
 
