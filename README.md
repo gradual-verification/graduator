@@ -54,18 +54,18 @@ include the following:
     the main prototype
 
 - [infer/src/checkers/registerCheckers.ml][], edited to tell Infer where to find
-  the implementation of the gradual checker prototype
+  the implementation of the gradual checker prototype.
 
 - [infer/src/nullsafe/Gradual.ml][] holding the primary source code for the
   prototype, added to the infer/src/nullsafe directory because this project
   began with an investigation of the implementation of Infer's `--nullsafe`
-  checker
+  checker.
 
 - [infer/tests/codetoanalyze/java/gradual/Gradual.java][] holding several test
-  cases which demonstrate output of the prototype when analyzing Java code
+  cases which demonstrate output of the prototype when analyzing Java code.
 
 - [infer/tests/codetoanalyze/java/gradual/Makefile][] allowing the
-  aforementioned Java analysis tests to be run
+  aforementioned Java analysis tests to be run.
 
 - [test][] runs the custom Java tests for this prototype.
 
