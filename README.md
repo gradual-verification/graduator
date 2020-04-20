@@ -30,8 +30,10 @@ include the following:
 
   - `gradual`, which is the one used in the experiments
   - `gradual_dereferences`, which just lists all null-pointer dereferences
-  - `gradual_annotated`, which acts like `gradual` but ignores
-    programmer-provided annotations
+  - `gradual_unannotated`, which acts like `gradual` but ignores
+    programmer-provided annotations, acting as if everything is annotated as
+    `@NonNull` in order to give a bound on the number of null checks that could
+    possibly be eliminated by adding more annotations
 
 - [infer/src/base/IssueType.ml][] edited to add four Infer issue types which are
   used by the above three checkers:
